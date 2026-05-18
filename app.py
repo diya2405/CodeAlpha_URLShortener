@@ -9,6 +9,8 @@ app = Flask(
     template_folder='templates'
 )
 
+os.makedirs('instance', exist_ok=True)
+
 # Database setup
 def init_db():
     conn = sqlite3.connect('instance/urls.db')
@@ -85,10 +87,8 @@ def get_all_urls():
         'short_url': f'{request.host_url}{u[0]}'
     } for u in urls])
 
+init_db()
 
 if __name__ == '__main__':
-    import os
-    os.makedirs('instance', exist_ok=True)
-    init_db()
     port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port)
