@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 # Database setup
 def init_db():
-    conn = sqlite3.connect('urls.db')
+    conn = sqlite3.connect('instance/urls.db')
     c = conn.cursor()
     c.execute('''CREATE TABLE IF NOT EXISTS urls
                 (short_code TEXT PRIMARY KEY,
@@ -38,7 +38,7 @@ def shorten_url():
     # Use custom code if provided, else generate one
     short_code = custom_code if custom_code else generate_short_code()
 
-    conn = sqlite3.connect('urls.db')
+    conn = sqlite3.connect('instance/urls.db')
     c = conn.cursor()
     try:
         c.execute('INSERT INTO urls (short_code, original_url) VALUES (?, ?)',
@@ -49,13 +49,14 @@ def shorten_url():
         return jsonify({'error': 'That custom name is already taken! Try another.'}), 409
     conn.close()
 
-    short_url = f'http://localhost:5000/{short_code}'
+    base_url = request.host_url
+    short_url = f"{base_url}{short_code}"
     return jsonify({'short_url': short_url, 'short_code': short_code})
     
 
 @app.route('/<short_code>')
 def redirect_url(short_code):
-    conn = sqlite3.connect('urls.db')
+    conn = sqlite3.connect('instance/urls.db')
     c = conn.cursor()
     c.execute('SELECT original_url FROM urls WHERE short_code = ?', (short_code,))
     result = c.fetchone()
@@ -67,7 +68,7 @@ def redirect_url(short_code):
 
 @app.route('/all', methods=['GET'])
 def get_all_urls():
-    conn = sqlite3.connect('urls.db')
+    conn = sqlite3.connect('instance/urls.db')
     c = conn.cursor()
     c.execute('SELECT short_code, original_url, created_at FROM urls')
     urls = c.fetchall()
@@ -80,6 +81,9 @@ def get_all_urls():
         'short_url': f'http://localhost:5000/{u[0]}'
     } for u in urls])
 
+
 if __name__ == '__main__':
+    import os
     init_db()
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
