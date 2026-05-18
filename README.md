@@ -159,9 +159,9 @@ Example:
 
 You can deploy this project for free using:
 
-* [Render](https://render.com?utm_source=chatgpt.com)
-* [Railway](https://railway.app?utm_source=chatgpt.com)
-* [PythonAnywhere](https://www.pythonanywhere.com?utm_source=chatgpt.com)
+* [Render](https://render.com)
+* [Railway](https://railway.app)
+* [PythonAnywhere](https://www.pythonanywhere.com)
 
 ---
 
@@ -180,8 +180,8 @@ You can deploy this project for free using:
 
 Developed by Diya
 
-GitHub: [diya2405 GitHub Profile](https://github.com/diya2405?utm_source=chatgpt.com)
-
+GitHub: [diya2405 GitHub Profile](https://github.com/diya2405)
+Live at: [Visit](https://codealpha-urlshortener-a0p2.onrender.com)
 ---
 
 ## License
