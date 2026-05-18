@@ -2,7 +2,7 @@ from flask import Flask, redirect, request, jsonify, render_template
 import sqlite3
 import random
 import string
-
+import os
 app = Flask(
     __name__,
     static_folder='static',
@@ -85,9 +85,10 @@ def get_all_urls():
         'short_url': f'{request.host_url}{u[0]}'
     } for u in urls])
 
-init_db()
 
 if __name__ == '__main__':
     import os
+    os.makedirs('instance', exist_ok=True)
+    init_db()
     port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port)
