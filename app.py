@@ -3,7 +3,11 @@ import sqlite3
 import random
 import string
 
-app = Flask(__name__)
+app = Flask(
+    __name__,
+    static_folder='static',
+    template_folder='templates'
+)
 
 # Database setup
 def init_db():
@@ -73,17 +77,18 @@ def get_all_urls():
     c.execute('SELECT short_code, original_url, created_at FROM urls')
     urls = c.fetchall()
     conn.close()
-    
+
     return jsonify([{
         'short_code': u[0],
         'original_url': u[1],
         'created_at': u[2],
-        'short_url': f'http://localhost:5000/{u[0]}'
+        'short_url': f'{request.host_url}{u[0]}'
     } for u in urls])
 
 
 if __name__ == '__main__':
     import os
+    os.makedirs('instance', exist_ok=True)
     init_db()
     port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port)
