@@ -181,7 +181,9 @@ You can deploy this project for free using:
 Developed by Diya
 
 GitHub: [diya2405 GitHub Profile](https://github.com/diya2405)
+
 Live at: [Visit](https://codealpha-urlshortener-a0p2.onrender.com)
+
 ---
 
 ## License
